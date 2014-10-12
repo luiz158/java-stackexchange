@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org</groupId>
 	<artifactId>stackexchange</artifactId>
-	<version>0.5.0-SNAPSHOT</version>
+	<version>0.6.0-SNAPSHOT</version>
 	<packaging>jar</packaging>
 	<name>stackexchange</name>
 	<url>https://github.com/eugenp/java-stackexchange</url>
@@ -50,7 +50,7 @@
 		<!-- ops -->
 
 		<dependency>
-			<groupId>com.codahale.metrics</groupId>
+			<groupId>io.dropwizard.metrics</groupId>
 			<artifactId>metrics-core</artifactId>
 			<version>${metrics.version}</version>
 		</dependency>
@@ -149,28 +149,28 @@
 
 	<properties>
 		<!-- other -->
-		<jackson.version>2.2.3</jackson.version>
-		<httpclient.version>4.3.1</httpclient.version>
-		<httpcore.version>4.3.1</httpcore.version>
+		<jackson.version>2.3.3</jackson.version>
+		<httpclient.version>4.3.5</httpclient.version>
+		<httpcore.version>4.3.2</httpcore.version>
 		<org.apache.commons.io.version>2.4</org.apache.commons.io.version>
-		<commons-lang3.version>3.1</commons-lang3.version>
+		<commons-lang3.version>3.3.2</commons-lang3.version>
 
 		<!-- ops -->
-		<metrics.version>3.0.1</metrics.version>
+		<metrics.version>3.1.0</metrics.version>
 
 		<!-- logging -->
-		<org.slf4j.version>1.7.5</org.slf4j.version>
-		<logback.version>1.0.11</logback.version>
+		<org.slf4j.version>1.7.7</org.slf4j.version>
+		<logback.version>1.1.2</logback.version>
 
 		<!-- testing -->
 		<org.hamcrest.version>1.3</org.hamcrest.version>
 		<junit.version>4.11</junit.version>
-		<mockito.version>1.9.5</mockito.version>
+		<mockito.version>1.10.8</mockito.version>
 
 		<!-- maven plugins -->
 		<maven-compiler-plugin.version>3.1</maven-compiler-plugin.version>
-		<maven-resources-plugin.version>2.6</maven-resources-plugin.version>
-		<maven-surefire-plugin.version>2.16</maven-surefire-plugin.version>
+		<maven-resources-plugin.version>2.7</maven-resources-plugin.version>
+		<maven-surefire-plugin.version>2.17</maven-surefire-plugin.version>
 	</properties>
 
 	<issueManagement>
