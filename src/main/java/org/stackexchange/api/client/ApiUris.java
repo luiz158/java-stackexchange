@@ -5,6 +5,7 @@ import org.stackexchange.api.constants.StackSite;
 
 public class ApiUris {
     private static final String API_2_1 = "https://api.stackexchange.com/2.1";
+    private static final String API_2_2 = "https://api.stackexchange.com/2.2";
 
     private ApiUris() {
         throw new AssertionError();
