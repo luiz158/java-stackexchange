@@ -13,6 +13,11 @@ public final class ApiConstants {
         public static final String max = "max";
         public static final String site = "site";
         public static final String page = "page";
+        public static final String DESC = "desc";
+        public static final String VOTES = "votes";
+        public static final String S_QUESTIONS = "/questions";
+        public static final String S_TAGS_S = "/tags/";
+        public static final String S_FAQ = "/faq";
     }
 
 }

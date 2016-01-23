@@ -6,11 +6,6 @@ import org.stackexchange.api.constants.StackSite;
 public class ApiUris {
     private static final String API_2_1 = "https://api.stackexchange.com/2.1";
     private static final String API_2_2 = "https://api.stackexchange.com/2.2";
-    private static final String DESC = "desc";
-    private static final String VOTES = "votes";
-    private static String S_QUESTIONS = "/questions";
-    private static String S_TAGS_S = "/tags/";
-    private static String S_FAQ = "/faq";
 
     private ApiUris() {
         throw new AssertionError();
@@ -23,11 +18,11 @@ public class ApiUris {
     }
 
     public static String getQuestionsUri(final int min, final StackSite site, final int page) {
-        return getMultipleUri(min, site, S_QUESTIONS, page);
+        return getMultipleUri(min, site, Questions.S_QUESTIONS, page);
     }
 
     public static String getSingleQuestionUri(final StackSite site, final long id) {
-        final String operation = S_QUESTIONS + "/" + id;
+        final String operation = Questions.S_QUESTIONS + "/" + id;
         return getSingleUri(site, operation);
     }
 
@@ -36,12 +31,12 @@ public class ApiUris {
     }
 
     public static String getTagUri(final int min, final StackSite site, final String tag, final int page) {
-        return getMultipleUri(min, site, S_TAGS_S + tag + S_FAQ, page);
+        return getMultipleUri(min, site, Questions.S_TAGS_S + tag + Questions.S_FAQ, page);
     }
 
     // util
     static String getMultipleUri(final int min, final StackSite site, final String operation, final int page) {
-        final String params = new RequestBuilder().add(Questions.order, DESC).add(Questions.sort, VOTES).add(Questions.min, min).add(Questions.site, site).add(Questions.page, page).build();
+        final String params = new RequestBuilder().add(Questions.order, Questions.DESC).add(Questions.sort, Questions.VOTES).add(Questions.min, min).add(Questions.site, site).add(Questions.page, page).build();
         return getApiString() + operation + params;
     }
 
