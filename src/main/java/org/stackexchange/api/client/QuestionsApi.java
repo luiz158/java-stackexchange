@@ -1,9 +1,5 @@
 package org.stackexchange.api.client;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.nio.charset.Charset;
-
 import org.apache.commons.io.IOUtils;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -13,6 +9,10 @@ import org.apache.http.util.EntityUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.stackexchange.api.constants.StackSite;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.nio.charset.Charset;
 
 public class QuestionsApi {
     private final Logger logger = LoggerFactory.getLogger(getClass());
@@ -25,12 +25,10 @@ public class QuestionsApi {
 
     public QuestionsApi(final HttpClient client) {
         super();
-
         this.client = client;
     }
 
     // API
-
     public final String questions(final int minScore, final StackSite stackSite, final int page) {
         final String questionsUri = ApiUris.getQuestionsUri(minScore, stackSite, page);
         logger.debug("Retrieving Questions on page= {} of stackSite= {} via URI= {}", page, stackSite.name(), questionsUri);
@@ -39,7 +37,6 @@ public class QuestionsApi {
         } catch (final IOException ioEx) {
             logger.error("", ioEx);
         }
-
         return null;
     }
 
@@ -70,30 +67,16 @@ public class QuestionsApi {
     }
 
     // non-API
-
     final String questionsInternal(final int min, final String questionsUri) throws IOException {
-        HttpGet request = null;
-        HttpEntity httpEntity = null;
-        try {
-            request = new HttpGet(questionsUri);
-            final HttpResponse httpResponse = client.execute(request);
-            httpEntity = httpResponse.getEntity();
-            final InputStream entityContentStream = httpEntity.getContent();
-            final String outputAsEscapedHtml = IOUtils.toString(entityContentStream, Charset.forName("utf-8"));
-            return outputAsEscapedHtml;
-        } catch (final IOException ex) {
-            throw new IllegalStateException(ex);
-        } finally {
-            if (request != null) {
-                request.releaseConnection();
-            }
-            if (httpEntity != null) {
-                EntityUtils.consume(httpEntity);
-            }
-        }
+        return getResultForHttpRequest(questionsUri);
     }
 
     final String questionByIdInternal(final String questionUri) throws IOException {
+
+        return getResultForHttpRequest(questionUri);
+    }
+
+    private String getResultForHttpRequest(String questionUri) throws IOException {
         HttpGet request = null;
         HttpEntity httpEntity = null;
         try {
@@ -101,8 +84,7 @@ public class QuestionsApi {
             final HttpResponse httpResponse = client.execute(request);
             httpEntity = httpResponse.getEntity();
             final InputStream entityContentStream = httpEntity.getContent();
-            final String outputAsEscapedHtml = IOUtils.toString(entityContentStream, Charset.forName("utf-8"));
-            return outputAsEscapedHtml;
+            return IOUtils.toString(entityContentStream, Charset.forName("utf-8"));
         } catch (final IOException ex) {
             throw new IllegalStateException(ex);
         } finally {
