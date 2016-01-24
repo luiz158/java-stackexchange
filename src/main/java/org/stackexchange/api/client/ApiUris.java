@@ -5,6 +5,13 @@ import org.slf4j.LoggerFactory;
 import org.stackexchange.api.constants.ApiConstants.Questions;
 import org.stackexchange.api.constants.StackSite;
 
+import java.io.Serializable;
+import java.util.AbstractMap.SimpleEntry;
+import java.util.Collections;
+import java.util.Map;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
 public class ApiUris {
     private static final String API_2_1 = "https://api.stackexchange.com/2.1";
     private static final String API_2_2 = "https://api.stackexchange.com/2.2";
@@ -40,8 +47,21 @@ public class ApiUris {
 
     // util
     static String buildQuestionsMultipleUriParams(final int min, final StackSite site, final String operation, final int page) {
-        final String params = new RequestBuilder().add(Questions.ORDER, Questions.DESC).add(Questions.SORT, Questions.VOTES).add(Questions.MIN, min).add(Questions.SITE, site).add(Questions.PAGE, page).build();
+        Map<String, ? extends Serializable> uriParams = Collections.unmodifiableMap(Stream.of(
+                new SimpleEntry<>(Questions.ORDER, Questions.DESC),
+                new SimpleEntry<>(Questions.SORT, Questions.VOTES),
+                new SimpleEntry<>(Questions.MIN, min),
+                new SimpleEntry<>(Questions.SITE, site),
+                new SimpleEntry<>(Questions.PAGE, page))
+                .collect(Collectors.toMap(SimpleEntry::getKey, SimpleEntry::getValue)));
+        final String params = getBuild(min, site, page, uriParams);
         return getApiString() + operation + params;
+    }
+
+    private static String getBuild(int min, StackSite site, int page, Map<String, ? extends Serializable> uriParamKeyValue) {
+        RequestBuilder requestBuilder = new RequestBuilder();
+        uriParamKeyValue.entrySet().stream().forEach(e -> requestBuilder.add(e.getKey(), e.getValue()));
+        return requestBuilder.build();
     }
 
     static String getSingleUri(final StackSite site, final String operation) {
