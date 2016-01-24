@@ -31,9 +31,9 @@ public class QuestionsApi {
     // API
     public final String questions(final int minScore, final StackSite stackSite, final int page) {
         final String questionsUri = ApiUris.getQuestionsUri(minScore, stackSite, page);
-        logger.debug("Retrieving Questions on page= {} of stackSite= {} via URI= {}", page, stackSite.name(), questionsUri);
+        logger.debug("Retrieving Questions on PAGE= {} of stackSite= {} via URI= {}", page, stackSite.name(), questionsUri);
         try {
-            return questionsInternal(minScore, questionsUri);
+            return processQuestionWithMinScore(minScore, questionsUri);
         } catch (final IOException ioEx) {
             logger.error("", ioEx);
         }
@@ -42,10 +42,9 @@ public class QuestionsApi {
 
     public final String questions(final int minScore, final StackSite stackSite, final String tag, final int page) {
         final String questionsUriForTag = ApiUris.getTagUri(minScore, stackSite, tag, page);
-
-        logger.debug("Retrieving Questions on page= {} of stackSite= {} via URI= {}", page, stackSite.name(), questionsUriForTag);
+        logger.debug("Retrieving Questions on PAGE= {} of stackSite= {} via URI= {}", page, stackSite.name(), questionsUriForTag);
         try {
-            return questionsInternal(minScore, questionsUriForTag);
+            return processQuestionWithMinScore(minScore, questionsUriForTag);
         } catch (final IOException ioEx) {
             logger.error("", ioEx);
         }
@@ -58,7 +57,7 @@ public class QuestionsApi {
 
         logger.debug("Retrieving Question by id= {} of stackSite= {} via URI= {}", id, stackSite.name(), questionUriForId);
         try {
-            return questionByIdInternal(questionUriForId);
+            return processQuestion(questionUriForId);
         } catch (final IOException ioEx) {
             logger.error("", ioEx);
         }
@@ -67,12 +66,11 @@ public class QuestionsApi {
     }
 
     // non-API
-    final String questionsInternal(final int min, final String questionsUri) throws IOException {
+    final String processQuestionWithMinScore(final int min, final String questionsUri) throws IOException {
         return getResultForHttpRequest(questionsUri);
     }
 
-    final String questionByIdInternal(final String questionUri) throws IOException {
-
+    final String processQuestion(final String questionUri) throws IOException {
         return getResultForHttpRequest(questionUri);
     }
 
